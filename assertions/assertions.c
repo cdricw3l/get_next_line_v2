@@ -2,7 +2,7 @@
 #include <assert.h>
 #include <string.h>
 
-int		process_stach_v2(t_gnl *gnl, char **stach);
+int		process_stach_v2(t_gnl *gnl, char **stach, int new_ln_idx);
 void	init_gnl(t_gnl *gnl);
 
 int ft_strjoin_assertions()
@@ -46,32 +46,49 @@ void	ft_process_stach_assertions(void)
 	printf( "\033[33m" "\nTEST: %s\n" "\033[0m", __FUNCTION__);
 	init_gnl(&gnl);
 	stach  = NULL;
-	assert(process_stach_v2(&gnl, &stach) == READ && stach == NULL && gnl.line[0] == NULL);
+	assert(process_stach_v2(&gnl, &stach, idx_of(stach, 10)) == READ
+		&& stach == NULL
+			&& gnl.line[0] == NULL);
 	stach = strdup("hello_world");
-	assert(process_stach_v2(&gnl, &stach) == READ && stach == NULL && !strncmp(gnl.line[0], "hello_world", strlen(gnl.line[0])));
+	assert(process_stach_v2(&gnl, &stach, idx_of(stach, 10)) == READ
+		&& stach == NULL
+			&& !strncmp(gnl.line[0], "hello_world", strlen(gnl.line[0])));
 	stach = strdup("hello_world\nhello_berlin");
 	free(gnl.line[0]);
 	gnl.line[0] = NULL;
-	assert(process_stach_v2(&gnl, &stach) == NO_READ && !strncmp(stach, "hello_berlin", strlen(stach)) && !strncmp(gnl.line[0], "hello_world\n", strlen(gnl.line[0])));
+	assert(process_stach_v2(&gnl, &stach, idx_of(stach, 10)) == NO_READ
+		&& !strncmp(stach, "hello_berlin", strlen(stach))
+			&& !strncmp(gnl.line[0], "hello_world\n", strlen(gnl.line[0])));
 	free(gnl.line[0]);
 	gnl.line[0] = NULL;
-	assert(process_stach_v2(&gnl, &stach) == READ && stach == NULL && !strncmp(gnl.line[0], "hello_berlin", strlen(gnl.line[0])));
+	assert(process_stach_v2(&gnl, &stach, idx_of(stach, 10)) == READ
+		&& stach == NULL
+			&& !strncmp(gnl.line[0], "hello_berlin", strlen(gnl.line[0])));
 	free(gnl.line[0]);
 	gnl.line[0] = NULL;
 	stach = strdup("hello_world\nhello_berlin\n");
-	assert(process_stach_v2(&gnl, &stach) == NO_READ && !strncmp(stach, "hello_berlin\n", strlen(stach)) && !strncmp(gnl.line[0], "hello_world\n", strlen(gnl.line[0])));
+	assert(process_stach_v2(&gnl, &stach, idx_of(stach, 10)) == NO_READ
+		&& !strncmp(stach, "hello_berlin\n", strlen(stach))
+			&& !strncmp(gnl.line[0], "hello_world\n", strlen(gnl.line[0])));
 	free(gnl.line[0]);
 	gnl.line[0] = NULL;
-	assert(process_stach_v2(&gnl, &stach) == NO_READ && stach == NULL && !strncmp(gnl.line[0], "hello_berlin\n", strlen(gnl.line[0])));
+	assert(process_stach_v2(&gnl, &stach, idx_of(stach, 10)) == NO_READ
+		&& stach == NULL
+			&& !strncmp(gnl.line[0], "hello_berlin\n", strlen(gnl.line[0])));
 	free(gnl.line[0]);
 	gnl.line[0] = NULL;
 	stach = strdup("");
-	assert(process_stach_v2(&gnl, &stach) == READ && stach == NULL && !strncmp(gnl.line[0], "", strlen(gnl.line[0])));
+	assert(process_stach_v2(&gnl, &stach, idx_of(stach, 10)) == READ
+		&& stach == NULL
+			&& !strncmp(gnl.line[0], "", strlen(gnl.line[0])));
 	free(gnl.line[0]);
 	gnl.line[0] = NULL;
 	stach = strdup("\n");
-	assert(idx_of(stach, 10) >= 0 && idx_of(stach, 10) == (int)ft_strlen(stach) - 1);
-	assert(process_stach_v2(&gnl, &stach) == NO_READ && stach == NULL && !strncmp(gnl.line[0], "\n", strlen(gnl.line[0])));
+	assert(idx_of(stach, 10) >= 0
+		&& idx_of(stach, 10) == (int)ft_strlen(stach) - 1);
+	assert(process_stach_v2(&gnl, &stach, idx_of(stach, 10)) == NO_READ 
+		&& stach == NULL
+			&& !strncmp(gnl.line[0], "\n", strlen(gnl.line[0])));
 	assert(stach == NULL);
 	free(gnl.line[0]);
 	gnl.line[0] = NULL;
@@ -80,7 +97,7 @@ void	ft_process_stach_assertions(void)
 	while (stach)
 	{
 		printf("TEST %d\n", i++);
-		int r = process_stach_v2(&gnl, &stach);
+		int r = process_stach_v2(&gnl, &stach, idx_of(stach, 10));
 		assert(r == NO_READ);
 		free(gnl.line[0]);
 		gnl.line[0] = NULL;
