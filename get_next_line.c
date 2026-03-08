@@ -6,7 +6,7 @@
 /*   By: cdric.b <cdric.b@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 14:49:40 by cdric.b           #+#    #+#             */
-/*   Updated: 2026/03/08 13:09:16 by cdric.b          ###   ########.fr       */
+/*   Updated: 2026/03/08 13:47:52 by cdric.b          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,13 @@ int	process_stach_v2(t_gnl *gnl, char **stach)
 		*stach = NULL;
 		return (READ);
 	}
-	if (idx_of(*stach, 10) && idx_of(*stach, 10) == (int)ft_strlen(*stach) - 1)
+	if (idx_of(*stach, 10) >= 0 && idx_of(*stach, 10) == (int)ft_strlen(*stach) - 1)
 	{
 		ft_strjoin(gnl->line, stach);
 		free(*stach);
 		*stach = NULL;
 	}
-	else if (idx_of(*stach, 10)
+	else if (idx_of(*stach, 10) >= 0
 		&& idx_of(*stach, 10) < (int)ft_strlen(*stach) - 1)
 	{
 		*(gnl->line) = ft_substr(*stach, 0, idx_of(*stach, 10));

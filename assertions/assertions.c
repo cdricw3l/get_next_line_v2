@@ -52,12 +52,42 @@ void	ft_process_stach_assertions(void)
 	stach = strdup("hello_world\nhello_berlin");
 	free(gnl.line[0]);
 	gnl.line[0] = NULL;
-	assert(process_stach_v2(&gnl, &stach) == NO_READ);
+	assert(process_stach_v2(&gnl, &stach) == NO_READ && !strncmp(stach, "hello_berlin", strlen(stach)) && !strncmp(gnl.line[0], "hello_world\n", strlen(gnl.line[0])));
+	free(gnl.line[0]);
+	gnl.line[0] = NULL;
+	assert(process_stach_v2(&gnl, &stach) == READ && stach == NULL && !strncmp(gnl.line[0], "hello_berlin", strlen(gnl.line[0])));
+	free(gnl.line[0]);
+	gnl.line[0] = NULL;
+	stach = strdup("hello_world\nhello_berlin\n");
+	assert(process_stach_v2(&gnl, &stach) == NO_READ && !strncmp(stach, "hello_berlin\n", strlen(stach)) && !strncmp(gnl.line[0], "hello_world\n", strlen(gnl.line[0])));
+	free(gnl.line[0]);
+	gnl.line[0] = NULL;
+	assert(process_stach_v2(&gnl, &stach) == NO_READ && stach == NULL && !strncmp(gnl.line[0], "hello_berlin\n", strlen(gnl.line[0])));
+	free(gnl.line[0]);
+	gnl.line[0] = NULL;
+	stach = strdup("");
+	assert(process_stach_v2(&gnl, &stach) == READ && stach == NULL && !strncmp(gnl.line[0], "", strlen(gnl.line[0])));
+	free(gnl.line[0]);
+	gnl.line[0] = NULL;
+	stach = strdup("\n");
+	assert(idx_of(stach, 10) >= 0 && idx_of(stach, 10) == (int)ft_strlen(stach) - 1);
+	assert(process_stach_v2(&gnl, &stach) == NO_READ && stach == NULL && !strncmp(gnl.line[0], "\n", strlen(gnl.line[0])));
+	assert(stach == NULL);
+	free(gnl.line[0]);
+	gnl.line[0] = NULL;
+	stach = strdup("\n\n\n");
+	int i = 0;
+	while (stach)
+	{
+		printf("TEST %d\n", i++);
+		int r = process_stach_v2(&gnl, &stach);
+		assert(r == NO_READ);
+		free(gnl.line[0]);
+		gnl.line[0] = NULL;
+		(void)r;
 
-	printf("voici la stash %s\n", stach);
-	printf("voici la line %s\n", gnl.line[0]);
-	//assert(process_stach_v2(&gnl, &stach) == NO_READ && !strncmp(stach, "hello_berlin", strlen(stach)) && !strncmp(gnl.line[0], "hello_world\n", strlen(gnl.line[0])));
-
+	}
+	assert(stach == NULL);
 	printf( "\033[32m" "TEST: %s OK!\n" "\033[0m", __FUNCTION__);
 }
 
