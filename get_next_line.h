@@ -27,6 +27,8 @@ typedef struct s_gnl
 
 //UTILS
 
+char	*get_next_line(int fd);
+
 size_t	ft_strlen(const char *s);
 char	*ft_substr(char *str, size_t start, size_t end);
 int		ft_strjoin(char **line, char **buffer);

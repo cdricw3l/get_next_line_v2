@@ -6,7 +6,7 @@
 /*   By: cdric.b <cdric.b@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 14:49:40 by cdric.b           #+#    #+#             */
-/*   Updated: 2026/03/08 13:54:44 by cdric.b          ###   ########.fr       */
+/*   Updated: 2026/03/08 14:08:17 by cdric.b          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,3 +55,16 @@ int	process_stach_v2(t_gnl *gnl, char **stach, int new_ln_idx)
 	case 4: stach == "hello\nworld\n"; --> NO_READ  -> stach == world\n
 
 */
+
+char	*get_next_line(int fd)
+{
+	(void)fd;
+	t_gnl gnl;
+	static char *stash;
+
+	init_gnl(&gnl);
+	int r = process_stach_v2(&gnl, &stash, idx_of(stash, 10));
+	printf("voici r: %d et l'adresse de stash %p\n", r , stash);
+	
+	return (NULL);
+}

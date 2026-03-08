@@ -21,6 +21,9 @@ ${NAME}: ${OBJS_MAIN} ${OBJS_GNL}
 ${NAME_ASSER}: ${OBJS_GNL} ${OBJS_ASSER}
 	${CC} ${GFLAGS} ${OBJS_GNL} ${OBJS_ASSER} -o ${NAME_ASSER}
 
+run: ${NAME}
+	./${NAME}
+
 as: ${NAME_ASSER}
 	leaks --atExit -- ./${NAME_ASSER}
 
