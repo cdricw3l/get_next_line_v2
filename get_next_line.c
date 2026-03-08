@@ -6,7 +6,7 @@
 /*   By: cdric.b <cdric.b@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 14:49:40 by cdric.b           #+#    #+#             */
-/*   Updated: 2026/03/06 15:10:08 by cdric.b          ###   ########.fr       */
+/*   Updated: 2026/03/08 13:09:16 by cdric.b          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,45 +21,33 @@ void	init_gnl(t_gnl *gnl)
 
 int	process_stach_v2(t_gnl *gnl, char **stach)
 {
-	int	r;
+	char	*sub;
 
 	if (!(*stach))
 		return (READ);
 	if (idx_of(*stach, 10) < 0)
 	{
-		ft_strjoin(gnl->line, *stach);
+		ft_strjoin(gnl->line, stach);
 		free(*stach);
+		*stach = NULL;
 		return (READ);
 	}
-	if (idx_of(*stach, 10) && idx_of(*stach, 10) == ft_strlen(*stach) - 1)
+	if (idx_of(*stach, 10) && idx_of(*stach, 10) == (int)ft_strlen(*stach) - 1)
 	{
-		ft_strjoin(gnl->line, *stach);
+		ft_strjoin(gnl->line, stach);
 		free(*stach);
+		*stach = NULL;
 	}
-	else if (idx_of(*stach, 10) && idx_of(*stach, 10) < ft_strlen(*stach) - 1)
+	else if (idx_of(*stach, 10)
+		&& idx_of(*stach, 10) < (int)ft_strlen(*stach) - 1)
 	{
 		*(gnl->line) = ft_substr(*stach, 0, idx_of(*stach, 10));
+		sub = ft_substr(*stach, idx_of(*stach, 10) + 1, ft_strlen(*stach) - 1);
 		free(*stach);
-		*stach = ft_substr(*stach, idx_of(*stach, 10) + 1,
-				ft_strlen(*stach) - 1);
+		*stach = sub;
 	}
 	return (NO_READ);
 }
-
-// int main(void)
-// {
-// 	t_gnl gnl;
-
-// 	char *stash;
-// 	stash = NULL;
-// 	char *stash1 = "hello";
-// 	char *stash2 = "hello\n";
-// 	char *stash3 = "hello\ncomment ca va?\n";
-// 	assert(!stash && stash1 && stash2 && stash3);
-// 	init_gnl(&gnl);
-// 	assert(process_stach_v2(&gnl, &stash) == READ);
-// 	return (0);
-// }
 
 /*
 	case 1: stach == NULL; --> READ                 -> stach == NULL

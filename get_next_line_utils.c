@@ -6,7 +6,7 @@
 /*   By: cdric.b <cdric.b@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 15:15:27 by cdric.b           #+#    #+#             */
-/*   Updated: 2026/03/06 16:08:06 by cdric.b          ###   ########.fr       */
+/*   Updated: 2026/03/08 12:46:00 by cdric.b          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int	ft_strjoin(char **line, char **buffer)
 	return (OK);
 }
 
-int	ft_index_of(char *str, char c)
+int	idx_of(char *str, char c)
 {
 	size_t	i;
 
