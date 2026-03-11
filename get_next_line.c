@@ -6,13 +6,13 @@
 /*   By: cdric.b <cdric.b@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 14:49:40 by cdric.b           #+#    #+#             */
-/*   Updated: 2026/03/11 02:29:44 by cdric.b          ###   ########.fr       */
+/*   Updated: 2026/03/11 02:54:04 by cdric.b          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-void	*clean_gnl(t_gnl *gnl)
+static int	clean_gnl(t_gnl *gnl)
 {
 	free(gnl->buffer);
 	gnl->buffer = NULL;
@@ -21,10 +21,10 @@ void	*clean_gnl(t_gnl *gnl)
 		free(gnl->line[0]);
 		gnl->line[0] = NULL;
 	}
-	return (NULL);
+	return (NO_READ);
 }
 
-int	init_gnl(t_gnl *gnl)
+static int	init_gnl(t_gnl *gnl)
 {
 	gnl->buffer = malloc(sizeof(char) * BUFFER_SIZE);
 	if (!gnl->buffer)
@@ -34,7 +34,7 @@ int	init_gnl(t_gnl *gnl)
 	return (1);
 }
 
-int	process_stach_v2(t_gnl *gnl, char **stach, int new_ln_idx)
+static int	process_stach_v2(t_gnl *gnl, char **stach, int new_ln_idx)
 {
 	char	*sub;
 
@@ -63,13 +63,38 @@ int	process_stach_v2(t_gnl *gnl, char **stach, int new_ln_idx)
 	return (NO_READ);
 }
 
+static int	process_buffer(t_gnl *gnl, char **stash)
+{
+	int		r;
+	char	*end;
 
+	if (idx_of(gnl->buffer, 10) >= 0)
+	{
+		end = ft_substr(gnl->buffer, 0, idx_of(gnl->buffer, 10) + 1);
+		r = ft_strjoin(gnl->line, &end);
+		if (r == ERROR)
+			return (clean_gnl(gnl));
+		free(end);
+		*stash = ft_substr(gnl->buffer, idx_of(gnl->buffer, 10) + 1,
+				ft_strlen(gnl->buffer) - idx_of(gnl->buffer, 10));
+		free(gnl->buffer);
+		return (NO_READ);
+	}
+	if (gnl->b_read == 0)
+		return (clean_gnl(gnl));
+	else
+	{
+		r = ft_strjoin(gnl->line, &gnl->buffer);
+		if (r == ERROR)
+			return (clean_gnl(gnl));
+	}
+	
+	return (READ);
+}
 
 char	*get_next_line(int fd)
 {
-	int			r;
 	t_gnl		gnl;
-	char 		*end;
 	static char	*stash;
 
 	if (!init_gnl(&gnl))
@@ -83,41 +108,13 @@ char	*get_next_line(int fd)
 	{
 		gnl.b_read = read(fd, gnl.buffer, BUFFER_SIZE - 1);
 		if (gnl.b_read < 0)
-			return (clean_gnl(&gnl));
+		{
+			clean_gnl(&gnl);
+			return (NULL);
+		}
 		gnl.buffer[gnl.b_read] = '\0';
-		if (idx_of(gnl.buffer, 10) >= 0)
-		{
-			end = ft_substr(gnl.buffer, 0, idx_of(gnl.buffer, 10) + 1);
-			r = ft_strjoin(gnl.line, &end);
-			if (r == ERROR)
-				return (NULL);
-			free(end);
-			stash = ft_substr(gnl.buffer, idx_of(gnl.buffer, 10) + 1, ft_strlen(gnl.buffer) - idx_of(gnl.buffer, 10));
-		}
-		else
-		{
-			
-			if (gnl.b_read == 0)
-			{
-				free(gnl.buffer);
-				gnl.buffer = NULL;
-			}
-			else
-			{
-				r = ft_strjoin(gnl.line, &gnl.buffer);
-				if (r == ERROR)
-					return (NULL);
-			}
-		}
+		if (process_buffer(&gnl, &stash) == NO_READ)
+			return (gnl.line[0]);
 	}
-	free(gnl.buffer);
-	return (gnl.line[0]);
+	return (NULL);
 }
-
-/*
-	case 1: stach == NULL; --> READ                 -> stach == NULL
-	case 2: stach == "hello"; --> READ              -> stach == NULL
-	case 3: stach == "hello\n"; --> NO_READ         -> stach == NULL
-	case 4: stach == "hello\nworld\n"; --> NO_READ  -> stach == world\n
-
-*/
