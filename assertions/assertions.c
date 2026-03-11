@@ -3,7 +3,7 @@
 #include <string.h>
 
 int		process_stach_v2(t_gnl *gnl, char **stach, int new_ln_idx);
-void	init_gnl(t_gnl *gnl);
+int		init_gnl(t_gnl *gnl);
 
 int ft_strjoin_assertions()
 {

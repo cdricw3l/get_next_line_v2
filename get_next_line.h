@@ -8,7 +8,7 @@
 #include <string.h>
 #include <stdio.h>
 #ifndef BUFFER_SIZE
-	#define BUFFER_SIZE 10
+	#define BUFFER_SIZE 420
 #endif
 
 #define READ    1
@@ -21,7 +21,7 @@ typedef struct s_gnl
 	size_t b_read;
 	char *line[1];
 	char *stach[1];
-	char buffer[BUFFER_SIZE];
+	char *buffer;
 
 } t_gnl;
 
@@ -30,7 +30,7 @@ typedef struct s_gnl
 char	*get_next_line(int fd);
 
 size_t	ft_strlen(const char *s);
-char	*ft_substr(char *str, size_t start, size_t end);
+char    *ft_substr(char const *s, unsigned int start, size_t len);
 int		ft_strjoin(char **line, char **buffer);
 int		idx_of(char *str, char c);
 char	*ft_strdup(const char *s1);

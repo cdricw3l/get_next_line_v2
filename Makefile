@@ -37,3 +37,5 @@ git: fclean
 	git add .
 	git commit -m ${COM}
 	git push origin ${shell git branch --show-current}
+
+re: fclean ${NAME}

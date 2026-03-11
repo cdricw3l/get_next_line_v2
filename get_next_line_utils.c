@@ -6,7 +6,7 @@
 /*   By: cdric.b <cdric.b@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 15:15:27 by cdric.b           #+#    #+#             */
-/*   Updated: 2026/03/08 12:46:00 by cdric.b          ###   ########.fr       */
+/*   Updated: 2026/03/11 00:27:35 by cdric.b          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,25 +38,27 @@ size_t	ft_strlen(const char *s)
 	return (i);
 }
 
-char	*ft_substr(char *str, size_t start, size_t end)
+char    *ft_substr(char const *s, unsigned int start, size_t len)
 {
-	size_t	i;
-	size_t	len;
-	char	*new_str;
+        size_t  bytes_cpy;
+        size_t  src_len;
+        char    *new_str;
 
-	if (!str || start > end || start > ft_strlen(str))
-		return (NULL);
-	len = (end - start) + 1;
-	if (len > ft_strlen(str))
-		len = ft_strlen(str);
-	new_str = malloc(sizeof(char) * (len + 1));
-	if (!new_str)
-		return (NULL);
-	i = 0;
-	while (str[start] && start <= end)
-		new_str[i++] = str[start++];
-	new_str[i] = '\0';
-	return (new_str);
+        if (!s)
+                return (NULL);
+        src_len = ft_strlen(s);
+        if (start > src_len)
+                return (NULL);
+        if (len > src_len)
+                len = src_len;
+        new_str = malloc(sizeof(char) * (len + 1));
+        if (!new_str)
+                return (NULL);
+        bytes_cpy = 0;
+        while (s[start] && bytes_cpy < len)
+                new_str[bytes_cpy++] = s[start++];
+        new_str[bytes_cpy] = '\0';
+        return (new_str);
 }
 
 int	ft_strjoin(char **line, char **buffer)
@@ -66,9 +68,10 @@ int	ft_strjoin(char **line, char **buffer)
 
 	if (!(*line) && !(*buffer))
 		return (ERROR);
+	
 	if (!(*line))
 	{
-		*line = ft_substr(*buffer, 0, ft_strlen(*buffer) - 1);
+		*line = ft_substr(*buffer, 0, ft_strlen(*buffer));
 		if (!(*line))
 			return (ERROR);
 		return (OK);
