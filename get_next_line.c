@@ -6,7 +6,7 @@
 /*   By: cdric.b <cdric.b@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 14:49:40 by cdric.b           #+#    #+#             */
-/*   Updated: 2026/03/11 02:54:04 by cdric.b          ###   ########.fr       */
+/*   Updated: 2026/03/11 15:44:58 by cdric.b          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,14 +81,17 @@ static int	process_buffer(t_gnl *gnl, char **stash)
 		return (NO_READ);
 	}
 	if (gnl->b_read == 0)
-		return (clean_gnl(gnl));
-	else
 	{
-		r = ft_strjoin(gnl->line, &gnl->buffer);
-		if (r == ERROR)
-			return (clean_gnl(gnl));
+		if (gnl->line[0])
+		{
+			free(gnl->buffer);
+			return (NO_READ);
+		}
+		return (clean_gnl(gnl));
 	}
-	
+	r = ft_strjoin(gnl->line, &gnl->buffer);
+	if (r == ERROR)
+		return (clean_gnl(gnl));
 	return (READ);
 }
 
