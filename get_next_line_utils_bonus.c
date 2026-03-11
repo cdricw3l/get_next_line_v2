@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cdric.b <cdric.b@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 15:15:27 by cdric.b           #+#    #+#             */
-/*   Updated: 2026/03/11 20:13:52 by cdric.b          ###   ########.fr       */
+/*   Updated: 2026/03/11 20:13:22 by cdric.b          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 size_t	ft_strlcpy(char *restrict dst, const char *restrict src, size_t dstsize)
 {
@@ -40,9 +40,9 @@ size_t	ft_strlen(const char *s)
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
+	char	*new_str;
 	size_t	bytes_cpy;
 	size_t	src_len;
-	char	*new_str;
 
 	if (!s)
 		return (NULL);
@@ -76,7 +76,7 @@ int	ft_strjoin(char **line, char **buffer)
 		return (OK);
 	}
 	new_line = malloc(sizeof(char)
-			* (ft_strlen(*line) + ft_strlen(*buffer) + 1));
+			*(ft_strlen(*line) + ft_strlen(*buffer) + 1));
 	if (!new_line)
 		return (ERROR);
 	r = ft_strlcpy(new_line, *line, ft_strlen(*line) + 1);
