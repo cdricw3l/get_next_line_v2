@@ -6,7 +6,7 @@
 /*   By: cdric.b <cdric.b@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/08 12:52:10 by cdric.b           #+#    #+#             */
-/*   Updated: 2026/03/11 01:05:55 by cdric.b          ###   ########.fr       */
+/*   Updated: 2026/03/11 02:31:44 by cdric.b          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int main(void)
 		printf("Open Error\n");
 		return (1);
 	}
-
+	
 	while((line = get_next_line(fd)))
 	{
 		if (line)

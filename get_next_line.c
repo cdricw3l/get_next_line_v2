@@ -6,11 +6,23 @@
 /*   By: cdric.b <cdric.b@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 14:49:40 by cdric.b           #+#    #+#             */
-/*   Updated: 2026/03/11 01:09:07 by cdric.b          ###   ########.fr       */
+/*   Updated: 2026/03/11 02:29:44 by cdric.b          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+void	*clean_gnl(t_gnl *gnl)
+{
+	free(gnl->buffer);
+	gnl->buffer = NULL;
+	if (gnl->line[0])
+	{
+		free(gnl->line[0]);
+		gnl->line[0] = NULL;
+	}
+	return (NULL);
+}
 
 int	init_gnl(t_gnl *gnl)
 {
@@ -51,6 +63,8 @@ int	process_stach_v2(t_gnl *gnl, char **stach, int new_ln_idx)
 	return (NO_READ);
 }
 
+
+
 char	*get_next_line(int fd)
 {
 	int			r;
@@ -60,25 +74,24 @@ char	*get_next_line(int fd)
 
 	if (!init_gnl(&gnl))
 		return (NULL);
-	
 	if (process_stach_v2(&gnl, &stash, idx_of(stash, 10)) == NO_READ)
+	{
+		free(gnl.buffer);
 		return (gnl.line[0]);
-	
+	}
 	while (idx_of(gnl.buffer, 10) < 0 && gnl.b_read > 0)
 	{
 		gnl.b_read = read(fd, gnl.buffer, BUFFER_SIZE - 1);
 		if (gnl.b_read < 0)
-		{
-			printf("READ error\n");
-			return (NULL);
-		}
-		gnl.buffer[BUFFER_SIZE - 1] = '\0';
+			return (clean_gnl(&gnl));
+		gnl.buffer[gnl.b_read] = '\0';
 		if (idx_of(gnl.buffer, 10) >= 0)
 		{
 			end = ft_substr(gnl.buffer, 0, idx_of(gnl.buffer, 10) + 1);
 			r = ft_strjoin(gnl.line, &end);
 			if (r == ERROR)
 				return (NULL);
+			free(end);
 			stash = ft_substr(gnl.buffer, idx_of(gnl.buffer, 10) + 1, ft_strlen(gnl.buffer) - idx_of(gnl.buffer, 10));
 		}
 		else
@@ -95,10 +108,9 @@ char	*get_next_line(int fd)
 				if (r == ERROR)
 					return (NULL);
 			}
-			
 		}
 	}
-	
+	free(gnl.buffer);
 	return (gnl.line[0]);
 }
 

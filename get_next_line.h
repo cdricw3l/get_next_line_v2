@@ -8,7 +8,7 @@
 #include <string.h>
 #include <stdio.h>
 #ifndef BUFFER_SIZE
-	#define BUFFER_SIZE 420
+	#define BUFFER_SIZE 40
 #endif
 
 #define READ    1
