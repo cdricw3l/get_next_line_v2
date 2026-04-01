@@ -8,7 +8,7 @@ SRCS_GNL=get_next_line.c \
 SRCS_GNL_BONUS=get_next_line_bonus.c \
 	 get_next_line_utils_bonus.c
 SRCS_ASSER=assertions/assertions.c
-SRCS_MAIN=main/main.c
+SRCS_MAIN=main.c
 
 OBJS_GNL= ${SRCS_GNL:.c=.o}
 OBJS_GNL_BONUS= ${SRCS_GNL_BONUS:.c=.o}

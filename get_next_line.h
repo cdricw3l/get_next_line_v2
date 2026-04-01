@@ -6,7 +6,7 @@
 /*   By: cdric.b <cdric.b@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/11 18:54:55 by cdric.b           #+#    #+#             */
-/*   Updated: 2026/03/11 19:45:34 by cdric.b          ###   ########.fr       */
+/*   Updated: 2026/04/01 05:33:51 by cdric.b          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,19 @@
 # include <stdio.h>
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 2
+#  define BUFFER_SIZE 10000000
 # endif
 
-# define READ    	1
-# define NO_READ	0
-# define ERROR		-1
-# define OK			1
+# define READ    		1
+# define NO_READ		0
+# define ERROR			-1
+# define OK				1
+# define FREE_BUFFER	0
+# define FREE_ALL		1
 
 typedef struct s_gnl
 {
-	size_t	b_read;
+	int		b_read;
 	char	*line[1];
 	char	*stach[1];
 	char	*buffer;

@@ -6,7 +6,7 @@
 /*   By: cdric.b <cdric.b@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 15:15:27 by cdric.b           #+#    #+#             */
-/*   Updated: 2026/03/11 20:13:22 by cdric.b          ###   ########.fr       */
+/*   Updated: 2026/04/01 05:45:45 by cdric.b          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 
 int	ft_strjoin(char **line, char **buffer)
 {
-	size_t	r;
 	char	*new_line;
 
 	if (!(*line) && !(*buffer))
@@ -79,12 +78,11 @@ int	ft_strjoin(char **line, char **buffer)
 			*(ft_strlen(*line) + ft_strlen(*buffer) + 1));
 	if (!new_line)
 		return (ERROR);
-	r = ft_strlcpy(new_line, *line, ft_strlen(*line) + 1);
-	r = ft_strlcpy(&new_line[ft_strlen(new_line)],
-			*buffer, ft_strlen(*buffer) + 1);
+	ft_strlcpy(new_line, *line, ft_strlen(*line) + 1);
+	ft_strlcpy(&new_line[ft_strlen(new_line)],
+		*buffer, ft_strlen(*buffer) + 1);
 	free(*line);
 	*line = new_line;
-	(void) r;
 	return (OK);
 }
 

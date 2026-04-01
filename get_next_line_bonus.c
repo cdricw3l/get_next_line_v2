@@ -6,7 +6,7 @@
 /*   By: cdric.b <cdric.b@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 14:49:40 by cdric.b           #+#    #+#             */
-/*   Updated: 2026/03/11 20:11:21 by cdric.b          ###   ########.fr       */
+/*   Updated: 2026/04/01 05:53:11 by cdric.b          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ static int	clean_gnl(t_gnl *gnl)
 
 static int	init_gnl(t_gnl *gnl, int fd)
 {
+	if (fd < 0 || fd > FD_MAX)
+		return (0);
 	gnl->fd = fd;
 	gnl->buffer = malloc(sizeof(char) * BUFFER_SIZE);
 	if (!gnl->buffer)
@@ -81,7 +83,7 @@ static int	process_buffer(t_gnl *gnl, char **stash, int nl_idx)
 	}
 	if (gnl->b_read == 0)
 	{
-		if (gnl->line[0])
+		if (ft_strlen(gnl->line[0]))
 		{
 			free(gnl->buffer);
 			return (NO_READ);
