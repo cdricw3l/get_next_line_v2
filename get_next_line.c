@@ -6,7 +6,7 @@
 /*   By: cdric.b <cdric.b@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 14:49:40 by cdric.b           #+#    #+#             */
-/*   Updated: 2026/04/01 05:40:18 by cdric.b          ###   ########.fr       */
+/*   Updated: 2026/04/01 06:09:56 by cdric.b          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static int	clean_gnl(t_gnl *gnl, int free_type)
 
 static int	init_gnl(t_gnl *gnl, int fd)
 {
-	if (fd < 0)
+	if (fd < 0 || fd > FD_MAX)
 		return (0);
 	gnl->buffer = malloc(sizeof(char) * BUFFER_SIZE);
 	if (!gnl->buffer)

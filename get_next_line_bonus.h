@@ -6,7 +6,7 @@
 /*   By: cdric.b <cdric.b@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/11 19:46:18 by cdric.b           #+#    #+#             */
-/*   Updated: 2026/04/01 05:52:30 by cdric.b          ###   ########.fr       */
+/*   Updated: 2026/04/01 06:10:04 by cdric.b          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,15 @@
 # define ERROR 		-1
 # define OK 		1
 
-#define FD_MAX		1048575
+# define FD_MAX		1048575
+# define FREE_BUFFER	0
+# define FREE_ALL		1
 
 typedef struct s_gnl
 {
 	int		fd;
 	int		b_read;
 	char	*line[1];
-	char	*stach[FD_SETSIZE];
 	char	*buffer;
 
 }	t_gnl;
