@@ -6,7 +6,7 @@
 /*   By: cdric.b <cdric.b@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/11 18:54:55 by cdric.b           #+#    #+#             */
-/*   Updated: 2026/04/01 06:10:13 by cdric.b          ###   ########.fr       */
+/*   Updated: 2026/04/01 06:11:51 by cdric.b          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 # define OK				1
 # define FREE_BUFFER	0
 # define FREE_ALL		1
-#define FD_MAX			1048575
+# define FD_MAX			1048575
 
 typedef struct s_gnl
 {
