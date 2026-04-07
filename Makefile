@@ -1,38 +1,54 @@
-CC				:= cc
-NAME			:= gnl
-NAME_BONUS		:= gnl_bonus
-GFLAGS			:= -Wall -Wextra -Werror
-SRCS_GNL		:= get_next_line.c \
-	 			get_next_line_utils.c
-SRCS_GNL_BONUS	:=get_next_line_bonus.c \
-	 			get_next_line_utils_bonus.c
+NAME=workshop
+CLT_NAME= client
+SRV_NAME= client
+CC= clang
+GFLAGS= -Werror -Wextra -Wall -g
+LIB= 	-Llibft -lft
+SRCS= 	$(wildcard src/*.c)
 
-OBJS_GNL		:= ${SRCS_GNL:.c=.o}
-OBJS_GNL_BONUS	:= ${SRCS_GNL_BONUS:.c=.o}
-OBJS_MAIN		:= ${SRCS_MAIN:.c=.o}
-COM				:=GNL_V2
+SRCS_GNL := $(wildcard gnl/src/*.c)
+
+SRCS_CLT= 	src/client.c \
+			src/ft_htons.c \
+			src/ft_inet_pton.c
+
+SRCS_SRV= 	src/serveur.c \
+			src/ft_htons.c \
+			src/ft_inet_pton.c
+
+SRCS_OBJ= $(SRCS:.c=.o)
+GNL_OBJ= $(SRCS_GNL:.c=.o)
+CLT_OBJ= $(SRCS_CLT:.c=.o)
+SRV_OBJ= $(SRCS_SRV:.c=.o)
+GCOM="default commit message"
 
 %.o:%.c
-	${CC} -c ${GFLAGS} $^ -o $@
+	$(CC) $(GFLAGS)  -c $^ -o $@
 
-${NAME}: ${OBJS_MAIN} ${OBJS_GNL}
-	${CC} ${GFLAGS} ${OBJS_MAIN} ${OBJS_GNL} -o ${NAME}
-
-bonus: ${OBJS_GNL_BONUS}
-	${CC} ${GFLAGS} ${OBJS_GNL_BONUS} -o ${NAME_BONUS}
-
-run: ${NAME}
-	./${NAME}
+$(NAME): $(SRCS_OBJ) $(LIBFT_DIR)
+	$(CC) $(GFLAGS) $(SRCS_OBJ) $(LIB) -o $(NAME)
 
 clean:
-	rm -f ${OBJS_GNL} ${OBJS_GNL_BONUS}
+	rm -f $(GNL_OBJ) $(CLT_OBJ) $(SRV_OBJ)
+	rm -rf *.dSYM
 
 fclean: clean
-	rm -f ${NAME}  ${NAME_BONUS}
+	rm -f $(NAME) $(CLT_NAME) $(SRV_NAME)
+r:
+	./$(NAME)
 
-re: fclean ${NAME}
+re: fclean $(NAME)
+
+clt: $(CLT_OBJ) $(GNL_OBJ)
+	$(CC) $(GFLAGS) $(CLT_OBJ) $(GNL_OBJ) $(LIB) -o $(CLT_NAME)
+
+srv: $(SRV_OBJ)
+	$(CC) $(GFLAGS) $(SRV_OBJ) $(LIB) -o $(SRV_NAME)
 
 git: fclean
 	git add .
-	git commit -m ${COM}
-	git push origin ${shell git branch --show-current}
+	git commit -m $(GCOM)
+	git push $(shell git branch --show-current)
+
+lib:
+	cd libft && make bonus && make clean

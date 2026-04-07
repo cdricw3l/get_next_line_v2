@@ -6,13 +6,13 @@
 /*   By: cdric.b <cdric.b@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 15:15:27 by cdric.b           #+#    #+#             */
-/*   Updated: 2026/04/01 05:45:16 by cdric.b          ###   ########.fr       */
+/*   Updated: 2026/04/07 15:34:58 by cdric.b          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "../include/get_next_line.h"
 
-size_t	ft_strlcpy(char *restrict dst, const char *restrict src, size_t dstsize)
+size_t	ft_strlcpy_custom(char *restrict dst, const char *restrict src, size_t dstsize)
 {
 	size_t	i;
 
@@ -28,7 +28,7 @@ size_t	ft_strlcpy(char *restrict dst, const char *restrict src, size_t dstsize)
 	return (i);
 }
 
-size_t	ft_strlen(const char *s)
+size_t	ft_strlen_custom(const char *s)
 {
 	size_t	i;
 
@@ -38,7 +38,7 @@ size_t	ft_strlen(const char *s)
 	return (i);
 }
 
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+char	*ft_substr_custom(char const *s, unsigned int start, size_t len)
 {
 	size_t	bytes_cpy;
 	size_t	src_len;
@@ -46,7 +46,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 
 	if (!s)
 		return (NULL);
-	src_len = ft_strlen(s);
+	src_len = ft_strlen_custom(s);
 	if (start > src_len)
 		return (NULL);
 	if (len > src_len)
@@ -61,7 +61,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	return (new_str);
 }
 
-int	ft_strjoin(char **line, char **buffer)
+int	ft_strjoin_custom(char **line, char **buffer)
 {
 	char	*new_line;
 
@@ -69,18 +69,18 @@ int	ft_strjoin(char **line, char **buffer)
 		return (ERROR);
 	if (!(*line))
 	{
-		*line = ft_substr(*buffer, 0, ft_strlen(*buffer));
+		*line = ft_substr_custom(*buffer, 0, ft_strlen_custom(*buffer));
 		if (!(*line))
 			return (ERROR);
 		return (OK);
 	}
 	new_line = malloc(sizeof(char)
-			*(ft_strlen(*line) + ft_strlen(*buffer) + 1));
+			*(ft_strlen_custom(*line) + ft_strlen_custom(*buffer) + 1));
 	if (!new_line)
 		return (ERROR);
-	ft_strlcpy(new_line, *line, ft_strlen(*line) + 1);
-	ft_strlcpy(&new_line[ft_strlen(new_line)],
-		*buffer, ft_strlen(*buffer) + 1);
+	ft_strlcpy_custom(new_line, *line, ft_strlen_custom(*line) + 1);
+	ft_strlcpy_custom(&new_line[ft_strlen_custom(new_line)],
+		*buffer, ft_strlen_custom(*buffer) + 1);
 	free(*line);
 	*line = new_line;
 	return (OK);
