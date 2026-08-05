@@ -46,14 +46,32 @@ Elle prend en parametre la famille de protocol d'adresse IP, l'adresse ip au for
 
 
 
-```
+```c
 uint16_t htons(uint16_t hostshort);
 
-````
+```
 htonl prend en parametre et retourne un uint16_t. La valeur max d'un uint16_t est UINT16_MAX soit 65535.
 La fonction inverse les deux octets de la valeur passée en parametre qui correspond au port auquel on veut ce connecter.
 
 00000000 01011010 -> sortie_source -> entré_dest -> 01011010 00000000
 
 
-8 16 24 32
+# Laboratory for Network Protocols and Cybersecurity Engineering
+
+                INTERNET
+                    │
+              ┌───────────┐
+              │ pfSense   │
+              └─────┬─────┘
+                    │
+      ┌─────────────┴─────────────┐
+      │                           │
+  VLAN 10                    VLAN 20
+      │                           │
+ Debian                    Windows AD
+      │                           │
+ ubuntu                    Windows 11
+      │
+ OpenBSD
+      │
+ FreeBSD

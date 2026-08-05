@@ -1,6 +1,6 @@
 NAME=workshop
 CLT_NAME= client
-SRV_NAME= client
+SRV_NAME= serveur
 CC= clang
 GFLAGS= -Werror -Wextra -Wall -g
 LIB= 	-Llibft -lft
@@ -42,13 +42,13 @@ re: fclean $(NAME)
 clt: $(CLT_OBJ) $(GNL_OBJ)
 	$(CC) $(GFLAGS) $(CLT_OBJ) $(GNL_OBJ) $(LIB) -o $(CLT_NAME)
 
-srv: $(SRV_OBJ)
-	$(CC) $(GFLAGS) $(SRV_OBJ) $(LIB) -o $(SRV_NAME)
+srv: $(SRV_OBJ) $(GNL_OBJ)
+	$(CC) $(GFLAGS) $(SRV_OBJ) $(GNL_OBJ) $(LIB) -o $(SRV_NAME)
 
 git: fclean
 	git add .
 	git commit -m $(GCOM)
-	git push $(shell git branch --show-current)
+	git push origin $(shell git branch --show-current)
 
 lib:
 	cd libft && make bonus && make clean

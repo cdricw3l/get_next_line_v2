@@ -35,11 +35,16 @@ int client(void)
     }
     printf("Connection au port: %d\n", PORT);
 
-    line = get_next_line(1);
-    if(!line)
-        return (close_sock(sock, errno));
+    while (1)
+    {
+       line = get_next_line(1);
+        if(!line)
+            return (close_sock(sock, errno));
 
-    write(sock, line, ft_strlen(line));
+        write(sock, line, ft_strlen(line));
+    }
+    
+    
 
     close(sock);
     return (1);
